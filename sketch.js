@@ -72,7 +72,7 @@ function draw() {
     
     var angle = TWO_PI/points;
     
-    fill (63, 226, 101);
+    fill (32,113,106);
     noStroke();
     beginShape();
     
@@ -185,7 +185,7 @@ function Particle(x, y) {
     this.draw = function(){
         if (this.vit.x == 0){
             // couleur des trucs fixes
-            fill(232, 183, 12);
+            fill(255,247,140);
             noStroke();
         }else{
             // couleur des trucs qui bougent
