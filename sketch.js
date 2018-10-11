@@ -174,8 +174,8 @@ function Particle(x, y) {
         //                                random(0, hauteur));
         //    }
 
-        if (millis() < 7000){
-            this.pos = createVector(width/2, height/2).add(p5.Vector.random2D().setMag(100));
+        if (millis() < 10000){
+            this.pos = createVector(width/2, height/2).add(p5.Vector.random2D().setMag(300));
             this.vit = createVector(width/2, height/2).sub(this.pos).setMag(norme);
 
         }
@@ -208,7 +208,7 @@ function Particle(x, y) {
             // stroke("pink");
         }else{
             // couleur des trucs qui bougent
-            fill(232, 183, 12,0);
+            fill(232, 183, 12);
             noStroke();
         }
 
