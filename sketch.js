@@ -102,6 +102,7 @@ function setup() {
                     var distance_collision = (rectangles[i].r + rectangles[j].r) / 2;
                     if (rectangles[i].pos.dist(rectangles[j].pos) < distance_collision){	
                         rectangles[i].vit = createVector(0, 0);
+                        song.play();
                     }
                 }
             }
@@ -271,9 +272,9 @@ function setCity() {
                 rectangles.push(fourth_rectangle);
                 
                 citiesSet = true;
-            }
+}
             
-            class Splash{
+class Splash{
                 constructor(positionX, positionY){
                     this.tab_offsetX = [];
                     this.tab_offsetY = [];
@@ -309,4 +310,4 @@ function setCity() {
                     
                 }
                 
-            }
+}
