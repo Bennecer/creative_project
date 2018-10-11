@@ -14,7 +14,7 @@ var rectangles = [];
 
 
 var max_rectangles = 8000;
-var n_rectangles_plus = 1; // nouvelles rectangles à chaque rafraichissement 
+var n_rectangles_plus = 1; // nouveaux rectangles à chaque rafraichissement
 var n_rectangles_per = 1;  // nombre de frames avant rafraichissement
 
 
@@ -30,31 +30,32 @@ function setup() {
     positionY = 120;
 
      // on commence par une particule fixe au milieu du canvas
-     var premiere_rectangle = new Particle();
-     premiere_rectangle.pos = createVector(largeur/2,
+     var premier_rectangle = new Particle();
+     premier_rectangle.r = 50;
+     premier_rectangle.pos = createVector(largeur/2,
                                        hauteur/2);
-     premiere_rectangle.vit = createVector(0, 0);
-     rectangles.push(premiere_rectangle);
-     
+     premier_rectangle.vit = createVector(0, 0);
+     rectangles.push(premier_rectangle);
+
      // autres villes
-     var second_rectangle = new Particle();
+     /*var second_rectangle = new Particle();
      second_rectangle.pos = createVector(largeur/3.6,
                                        hauteur/2);
      second_rectangle.vit = createVector(0, 0);
      rectangles.push(second_rectangle);
- 
+
      var third_rectangle = new Particle();
      third_rectangle.pos = createVector(largeur/1.6,
                                        hauteur/8);
      third_rectangle.vit = createVector(0, 0);
      rectangles.push(third_rectangle);
- 
+
      var fourth_rectangle = new Particle();
      fourth_rectangle.pos = createVector(largeur/2,
                                        hauteur/1.12);
      fourth_rectangle.vit = createVector(0, 0);
-     rectangles.push(fourth_rectangle);
-    
+     rectangles.push(fourth_rectangle);*/
+
     for(var k=0; k<numberCircle; k++){
         if (positionX < rayonMax){
             tab_splash.push(new Splash(positionX,positionY));
@@ -116,7 +117,7 @@ function draw() {
                     // la distance de collision est égale à la moitié
                     // de la somme des rayons des rectangles
                     var distance_collision = (rectangles[i].r + rectangles[j].r) / 2;
-                    if (rectangles[i].pos.dist(rectangles[j].pos) < distance_collision){	
+                    if (rectangles[i].pos.dist(rectangles[j].pos) < distance_collision){
                         rectangles[i].vit = createVector(0, 0);
                     }
                 }
@@ -125,7 +126,7 @@ function draw() {
             // si la vitesse est nulle alors on fait grossir le trait
             rectangles[i].grow();
         }
-        rectangles[i].draw();	
+        rectangles[i].draw();
     }
 
     if ((rectangles.length < max_rectangles)){
@@ -172,15 +173,16 @@ function Particle(x, y) {
         this.vit = createVector(0, 0);
     }else{
         // sinon il apparait quelque part sur le bord du canvas
-       if (random([true, false])){
+       /*if (random([true, false])){
            // bord horizontal
            this.pos = createVector(random(0, largeur),
-                                   1);
+                                   random([0, hauteur]));
        }else{
            // bord vertical
-           this.pos = createVector(1,
+           this.pos = createVector(random([0, largeur]),
                                    random(0, hauteur));
-       }
+       }*/
+       this.pos = createVector(width/2, height/2).add(p5.Vector.random2D().setMag(100));
 
 
         // vitesse aléatoire
@@ -189,7 +191,7 @@ function Particle(x, y) {
         var norme = random(10, 15);
 
         this.vit = p5.Vector.random2D().setMag(norme);
-
+        //this.vit = createVector(width/2, height/2).sub(this.pos).setMag(norme);
     }
 
     this.draw = function(){
@@ -221,7 +223,7 @@ function Particle(x, y) {
     this.update = function(){
         this.pos.add(this.vit)
 
-        // periodicité du canvas : si une rectangle sort par la droite elle revient à gauche
+        // periodicité du canvas : si un rectangle sort par la droite il revient à gauche
         if (this.pos.x > largeur){
             this.pos.x = 0;
         }else if(this.pos.x < 0){
