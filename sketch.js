@@ -16,7 +16,6 @@ var citiesSet = false;
 
 var max_rectangles = 8000;
 var n_rectangles_plus = 5; // nouvelles rectangles à chaque rafraichissement 
-
 var n_rectangles_per = 5;
 
 function setup() {
@@ -69,7 +68,7 @@ function setup() {
         
         var angle = TWO_PI/points;
         
-        fill (35, 163, 147);
+        fill (8, 194, 153);
         noStroke();
         beginShape();
         
@@ -90,7 +89,7 @@ function setup() {
         pop();
         
         if (millis() > 9000 && !citiesSet){
-            // setCity();
+            setCity();
         }
         
         for (var i = 0; i < rectangles.length; i++){
@@ -167,25 +166,24 @@ function Particle(x, y) {
         //                                random(0, hauteur));
         //    }
         
-        if (millis() < 8000){
+        if (millis() < 7000){
             this.pos = createVector(width/2, height/2).add(p5.Vector.random2D().setMag(100));
             this.vit = createVector(width/2, height/2).sub(this.pos).setMag(norme);
+         
         }
         else{
             var norme = random(20, 15);
 
             if (random([true, false])){
                 // bord horizontal
-                this.pos = createVector(random(0, largeur),
-                random([0, hauteur]));
+                this.pos = createVector(random(0, largeur), 1);
             }else{
                 // bord vertical
-                this.pos = createVector(random([0, largeur]),
-                random(0, hauteur));
+                this.pos = createVector(1, random(0, hauteur));
             }
             
-            // this.vit = p5.Vector.random2D().setMag(norme);
-            this.vit = createVector(width/2, height/2).sub(this.pos).setMag(norme);
+            this.vit = p5.Vector.random2D().setMag(norme);
+            // this.vit = createVector(width/2, height/2).sub(this.pos).setMag(norme);
             
         }
         // vitesse aléatoire
@@ -198,11 +196,11 @@ function Particle(x, y) {
     this.draw = function(){
         if (this.vit.x == 0){
             // couleur des trucs fixes
-            fill(255,247,140);
-            stroke("pink");
+            fill(87,17,121);
+            // stroke("pink");
         }else{
             // couleur des trucs qui bougent
-            fill(232, 183, 12);
+            fill(232, 183, 12,0);
             noStroke();
         }
         
