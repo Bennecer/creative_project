@@ -1,4 +1,6 @@
 canvas{
   background-image: url(img/carte-nantes.png);
+  background-size: cover;
   background-position: center 71%;
+  background-repeat: no-repeat;
 }

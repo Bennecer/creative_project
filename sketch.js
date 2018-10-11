@@ -13,13 +13,13 @@ var hauteur = 0;
 var rectangles = [];
 
 
-var max_rectangles = 4000;
+var max_rectangles = 8000;
 var n_rectangles_plus = 1; // nouvelles rectangles à chaque rafraichissement 
 var n_rectangles_per = 1;  // nombre de frames avant rafraichissement
 
 
 function setup() {
-    createCanvas(windowWidth, windowHeight );
+    createCanvas(windowWidth, windowHeight);
     rectMode(CENTER);
     largeur = windowWidth;
     hauteur = windowHeight;
@@ -29,12 +29,31 @@ function setup() {
     positionX = -rayonMax+25;
     positionY = 120;
 
-    // on commence par une particule fixe au milieu du canvas
-    var premiere_rectangle = new Particle();
-    premiere_rectangle.pos = createVector(largeur/2,
-                                      hauteur/2);
-    premiere_rectangle.vit = createVector(0, 0);
-    rectangles.push(premiere_rectangle);
+     // on commence par une particule fixe au milieu du canvas
+     var premiere_rectangle = new Particle();
+     premiere_rectangle.pos = createVector(largeur/2,
+                                       hauteur/2);
+     premiere_rectangle.vit = createVector(0, 0);
+     rectangles.push(premiere_rectangle);
+     
+     // autres villes
+     var second_rectangle = new Particle();
+     second_rectangle.pos = createVector(largeur/3.6,
+                                       hauteur/2);
+     second_rectangle.vit = createVector(0, 0);
+     rectangles.push(second_rectangle);
+ 
+     var third_rectangle = new Particle();
+     third_rectangle.pos = createVector(largeur/1.6,
+                                       hauteur/8);
+     third_rectangle.vit = createVector(0, 0);
+     rectangles.push(third_rectangle);
+ 
+     var fourth_rectangle = new Particle();
+     fourth_rectangle.pos = createVector(largeur/2,
+                                       hauteur/1.12);
+     fourth_rectangle.vit = createVector(0, 0);
+     rectangles.push(fourth_rectangle);
     
     for(var k=0; k<numberCircle; k++){
         if (positionX < rayonMax){
@@ -57,13 +76,7 @@ function setup() {
         }
 
         tab_rayon.push(curves);
-
-
     }
-
-
-
-
 }
 
 function draw() {
@@ -76,8 +89,6 @@ function draw() {
     noStroke();
     beginShape();
 
-
-
     for (var i = 0 ; i < points; i++){
 
         if ( tab_rayon[i].c < 1){
@@ -85,7 +96,6 @@ function draw() {
         }
 
         var x = tab_rayon[i].rayon*tab_rayon[i].c * cos(angle*i);
-
 
         var y = tab_rayon[i].rayon*tab_rayon[i].c * sin(angle*i);
 
@@ -176,7 +186,7 @@ function Particle(x, y) {
         // vitesse aléatoire
         // avec une astuce pour qu'elle ne soit pas nulle : le premier random donne la vitesse
         // et le deuxième le sens
-        var norme = random(3, 6);
+        var norme = random(10, 15);
 
         this.vit = p5.Vector.random2D().setMag(norme);
 
@@ -186,10 +196,10 @@ function Particle(x, y) {
         if (this.vit.x == 0){
             // couleur des trucs fixes
             fill(255,247,140);
-            noStroke();
+            stroke("pink");
         }else{
             // couleur des trucs qui bougent
-            fill(232, 183, 12,0);
+            fill(232, 183, 12);
             noStroke();
         }
 
@@ -239,10 +249,6 @@ function Particle(x, y) {
 
 }
 
-function mousePressed(){
-    // ajout d'une rectangle fixe sous la souris
-    rectangles.push(new Particle(mouseX, mouseY));
-}
 
 class Splash{
     constructor(positionX, positionY){
