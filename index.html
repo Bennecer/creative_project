@@ -6,16 +6,25 @@
   </head>
   <body>
     <div id="range-slider">
-      <input onchange="dateChange(this.value)" id="range-slider__range" type="range" value="2018" min="1800" max="2018">
+      <input  id="range-slider__range" type="range" value="2018" min="1800" max="2018">
       <span id="range-slider__value">2018</span>
     </div>
 
     <script>
 
-      function dateChange(newVal){
+      /*function dateChange(newVal){
         value = document.getElementById('range-slider__value');
         value.innerHTML=newVal;
-      }
+      }*/
+
+      var value = document.getElementById('range-slider__value');
+      var range = document.getElementById('range-slider__range');
+
+      value.innerHTML = range.getAttribute('value');
+
+      range.addEventListener('input', function() {
+        value.innerHTML = this.value;
+      });
 
     </script>
   </body>
