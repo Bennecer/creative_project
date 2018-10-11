@@ -12,11 +12,12 @@ var largeur = 0;
 var hauteur = 0;
 var rectangles = [];
 
+var citiesSet = false;
 
 var max_rectangles = 8000;
-var n_rectangles_plus = 10; // nouvelles rectangles à chaque rafraichissement 
+var n_rectangles_plus = 5; // nouvelles rectangles à chaque rafraichissement 
 
-var n_rectangles_per = 1;
+var n_rectangles_per = 5;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -31,31 +32,14 @@ function setup() {
 
      // on commence par une particule fixe au milieu du canvas
      var premier_rectangle = new Particle();
-     premier_rectangle.r = 50;
+     premier_rectangle.r = 20;
      premier_rectangle.pos = createVector(largeur/2,
                                        hauteur/2);
      premier_rectangle.vit = createVector(0, 0);
      rectangles.push(premier_rectangle);
      
-    //  // autres villes
-    //  var second_rectangle = new Particle();
-    //  second_rectangle.pos = createVector(largeur/3.6,
-    //                                    hauteur/2);
-    //  second_rectangle.vit = createVector(0, 0);
-    //  rectangles.push(second_rectangle);
- 
-    //  var third_rectangle = new Particle();
-    //  third_rectangle.pos = createVector(largeur/1.6,
-    //                                    hauteur/8);
-    //  third_rectangle.vit = createVector(0, 0);
-    //  rectangles.push(third_rectangle);
- 
-    //  var fourth_rectangle = new Particle();
-    //  fourth_rectangle.pos = createVector(largeur/2,
-    //                                    hauteur/1.12);
-    //  fourth_rectangle.vit = createVector(0, 0);
-    //  rectangles.push(fourth_rectangle);
-    
+    // autres villes
+   
     for(var k=0; k<numberCircle; k++){
         if (positionX < rayonMax){
             tab_splash.push(new Splash(positionX,positionY));
@@ -104,6 +88,10 @@ function draw() {
 
     endShape(CLOSE);
     pop();
+
+    if (millis() > 9000 && !citiesSet){
+        // setCity();
+     }
 
     for (var i = 0; i < rectangles.length; i++){
         if (rectangles[i].vit.mag() != 0){// si la vitesse n'est pas nulle
@@ -178,12 +166,25 @@ function Particle(x, y) {
     //        this.pos = createVector(1,
     //                                random(0, hauteur));
     //    }
-    this.pos = createVector(width/2, height/2).add(p5.Vector.random2D().setMag(100));
 
+    if (millis() < 5000){
+    this.pos = createVector(width/2, height/2).add(p5.Vector.random2D().setMag(100));
+    }
+    else{
+        if (random([true, false])){
+                   // bord horizontal
+                   this.pos = createVector(random(0, largeur),
+                                           1);
+               }else{
+                   // bord vertical
+                   this.pos = createVector(1,
+                                           random(0, hauteur));
+               }
+    }
         // vitesse aléatoire
         // avec une astuce pour qu'elle ne soit pas nulle : le premier random donne la vitesse
         // et le deuxième le sens
-        var norme = random(10, 15);
+        var norme = random(100, 15);
 
         this.vit = p5.Vector.random2D().setMag(norme);
 
@@ -196,7 +197,7 @@ function Particle(x, y) {
             stroke("pink");
         }else{
             // couleur des trucs qui bougent
-            fill(232, 183, 12);
+            fill(232, 183, 12,0);
             noStroke();
         }
 
@@ -246,6 +247,28 @@ function Particle(x, y) {
 
 }
 
+function setCity() {
+    
+    var second_rectangle = new Particle();
+    second_rectangle.pos = createVector(largeur/3.6,
+                                    hauteur/2);
+    second_rectangle.vit = createVector(0, 0);
+    rectangles.push(second_rectangle);
+
+    var third_rectangle = new Particle();
+    third_rectangle.pos = createVector(largeur/1.6,
+                                    hauteur/8);
+    third_rectangle.vit = createVector(0, 0);
+    rectangles.push(third_rectangle);
+
+    var fourth_rectangle = new Particle();
+    fourth_rectangle.pos = createVector(largeur/2,
+                                    hauteur/1.12);
+    fourth_rectangle.vit = createVector(0, 0);
+    rectangles.push(fourth_rectangle);
+
+    citiesSet = true;
+}
 
 class Splash{
     constructor(positionX, positionY){
