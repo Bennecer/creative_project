@@ -18,7 +18,7 @@ var n_rectangles_plus = 1; // nouvelles rectangles à chaque rafraichissement
 var n_rectangles_per = 1;  // nombre de frames avant rafraichissement
 
 
-function setup() { 
+function setup() {
     createCanvas(windowWidth, windowHeight );
     rectMode(CENTER);
     largeur = windowWidth;
@@ -42,9 +42,9 @@ function setup() {
             positionX += 30;
             positionY -= 8;
         }
-        
+
     }
-    
+
     for (var i = 0 ; i < points; i++){
         var rayon = windowHeight - 450;
         if( i % 2 ==0){
@@ -55,47 +55,47 @@ function setup() {
             v : random(1.09, 1.1),
             c : 0.1
         }
-        
-        tab_rayon.push(curves);
-        
-        
-    }
-    
-    
-    
-    
-} 
 
-function draw() { 
+        tab_rayon.push(curves);
+
+
+    }
+
+
+
+
+}
+
+function draw() {
     push();
     translate (width/2, height/2);
-    
+
     var angle = TWO_PI/points;
-    
-    fill (32,113,106);
+
+    fill (35, 163, 147);
     noStroke();
     beginShape();
-    
-    
-    
+
+
+
     for (var i = 0 ; i < points; i++){
-        
+
         if ( tab_rayon[i].c < 1){
             tab_rayon[i].c *= tab_rayon[i].v;
         }
-        
+
         var x = tab_rayon[i].rayon*tab_rayon[i].c * cos(angle*i);
-        
-        
+
+
         var y = tab_rayon[i].rayon*tab_rayon[i].c * sin(angle*i);
-        
+
         curveVertex(x,y);
-        
-    }   
-    
+
+    }
+
     endShape(CLOSE);
     pop();
-  
+
 
 
     for (var i = 0; i < rectangles.length; i++){
@@ -109,7 +109,7 @@ function draw() {
                     if (rectangles[i].pos.dist(rectangles[j].pos) < distance_collision){	
                         rectangles[i].vit = createVector(0, 0);
                     }
-                } 
+                }
             }
         }else{
             // si la vitesse est nulle alors on fait grossir le trait
@@ -152,7 +152,7 @@ function Particle(x, y) {
     // longueur du trait, au départ égal au rayon d'action
     this.l = this.r;
 
-    // largeur et longueur maximales du trait (pour quand ça commence à grossir) 
+    // largeur et longueur maximales du trait (pour quand ça commence à grossir)
     this.max_l = random(this.r, this.r*5);
     this.max_w = random(this.r, this.r*2);
 
@@ -171,8 +171,8 @@ function Particle(x, y) {
            this.pos = createVector(1,
                                    random(0, hauteur));
        }
-        
-      
+
+
         // vitesse aléatoire
         // avec une astuce pour qu'elle ne soit pas nulle : le premier random donne la vitesse
         // et le deuxième le sens
@@ -203,7 +203,7 @@ function Particle(x, y) {
         // fill(255);
         // var ww = (this.r-this.w)/2;
         // rect(0, this.w/2 + ww/2, this.r, ww);
-        // rect(0, -(this.w/2 + ww/2), this.r, ww);	
+        // rect(0, -(this.w/2 + ww/2), this.r, ww);
 
         pop();
     };
@@ -254,10 +254,10 @@ class Splash{
         this.rGreen;
         this.positionX = positionX;
         this.positionY = positionY;
-        
-        this.rRed = Math.floor((Math.random() * 216) + 1); 
+
+        this.rRed = Math.floor((Math.random() * 216) + 1);
         this.rGreen = Math.floor((Math.random() * 228) + 171);
-        
+
         for(var i=0; i<numberCircle; i++){
             this.plusOrMinus = Math.random() < 0.5 ? -1 : 1;
             this.tab_offsetX[i] = (random(circleSize)) * this.plusOrMinus;
@@ -266,18 +266,18 @@ class Splash{
             this.newSize = random(circleSize/4, circleSize/2);
         }
     }
-    
+
     draw(){
         fill(this.rRed, this.rGreen, 255);  // Use color variable 'c' as fill color
         noStroke();  // Don't draw a stroke around shapes
-        
+
         ellipse(this.positionX, this.positionY, circleSize, circleSize);
         for(var i = 0; i < 15; i++){
             if (millis() > 1000+ i*155){
             ellipse(this.positionX+this.tab_offsetX[i], this.positionY+this.tab_offsetY[i], this.newSize, this.newSize);
             }
         }
-        
+
     }
-    
+
 }
