@@ -10,12 +10,12 @@ var positionY = 0;
 
 var largeur = 0;
 var hauteur = 0;
-var balles = [];
+var rectangles = [];
 
 
-var max_balles = 4000;
-var n_balles_plus = 1; // nouvelles balles à chaque rafraichissement 
-var n_balles_per = 1;  // nombre de frames avant rafraichissement
+var max_rectangles = 4000;
+var n_rectangles_plus = 1; // nouvelles rectangles à chaque rafraichissement 
+var n_rectangles_per = 1;  // nombre de frames avant rafraichissement
 
 
 function setup() { 
@@ -30,11 +30,11 @@ function setup() {
     positionY = 120;
 
     // on commence par une particule fixe au milieu du canvas
-    var premiere_balle = new Particle();
-    premiere_balle.pos = createVector(largeur/2,
+    var premiere_rectangle = new Particle();
+    premiere_rectangle.pos = createVector(largeur/2,
                                       hauteur/2);
-    premiere_balle.vit = createVector(0, 0);
-    balles.push(premiere_balle);
+    premiere_rectangle.vit = createVector(0, 0);
+    rectangles.push(premiere_rectangle);
     
     for(var k=0; k<numberCircle; k++){
         if (positionX < rayonMax){
@@ -98,30 +98,30 @@ function draw() {
   
 
 
-    for (var i = 0; i < balles.length; i++){
-        if (balles[i].vit.mag() != 0){// si la vitesse n'est pas nulle
-            balles[i].update();
-            for (var j = 0; j < balles.length; j++){
-                if ((i!=j) && (balles[j].vit.mag() == 0)) {
+    for (var i = 0; i < rectangles.length; i++){
+        if (rectangles[i].vit.mag() != 0){// si la vitesse n'est pas nulle
+            rectangles[i].update();
+            for (var j = 0; j < rectangles.length; j++){
+                if ((i!=j) && (rectangles[j].vit.mag() == 0)) {
                     // la distance de collision est égale à la moitié
-                    // de la somme des rayons des balles
-                    var distance_collision = (balles[i].r + balles[j].r) / 2;
-                    if (balles[i].pos.dist(balles[j].pos) < distance_collision){	
-                        balles[i].vit = createVector(0, 0);
+                    // de la somme des rayons des rectangles
+                    var distance_collision = (rectangles[i].r + rectangles[j].r) / 2;
+                    if (rectangles[i].pos.dist(rectangles[j].pos) < distance_collision){	
+                        rectangles[i].vit = createVector(0, 0);
                     }
                 } 
             }
         }else{
             // si la vitesse est nulle alors on fait grossir le trait
-            balles[i].grow();
+            rectangles[i].grow();
         }
-        balles[i].draw();	
+        rectangles[i].draw();	
     }
 
-    if ((balles.length < max_balles)){
-        if (frameCount % n_balles_per == 0){
-            for (var i = 0; i < n_balles_plus; i++){
-                balles.push(new Particle());
+    if ((rectangles.length < max_rectangles)){
+        if (frameCount % n_rectangles_per == 0){
+            for (var i = 0; i < n_rectangles_plus; i++){
+                rectangles.push(new Particle());
             }
         }
     }
@@ -211,7 +211,7 @@ function Particle(x, y) {
     this.update = function(){
         this.pos.add(this.vit)
 
-        // periodicité du canvas : si une balle sort par la droite elle revient à gauche
+        // periodicité du canvas : si une rectangle sort par la droite elle revient à gauche
         if (this.pos.x > largeur){
             this.pos.x = 0;
         }else if(this.pos.x < 0){
@@ -240,8 +240,8 @@ function Particle(x, y) {
 }
 
 function mousePressed(){
-    // ajout d'une balle fixe sous la souris
-    balles.push(new Particle(mouseX, mouseY));
+    // ajout d'une rectangle fixe sous la souris
+    rectangles.push(new Particle(mouseX, mouseY));
 }
 
 class Splash{
