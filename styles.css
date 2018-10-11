@@ -1,3 +1,4 @@
-body{
+canvas{
   background-image: url(img/carte-nantes.png);
+  background-position: center center;
 }
