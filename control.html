@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+	<title>p5js Test</title>
+
+	<script
+	    src="https://code.jquery.com/jquery-3.3.1.min.js"
+	    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	    crossorigin="anonymous"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.2/dat.gui.js"></script>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	  var socket = io();
+	</script>
+
+	<script>
+
+	 var GuiTest = function(){
+	     this.buildingSize = 20;
+	 }
+
+
+	 $(document).ready(function(){
+
+	     var gui_param = new GuiTest();
+
+	     var gui = new dat.gui.GUI();
+	     var speed_controller = gui.add(gui_param, 'buildingSize', 1, 40);
+
+	      speed_controller.onChange(function(value){
+//		  vit = value;
+		  socket.emit('buildingSize', value);
+	      });
+	     /*
+	      * 	     socket.on('speed', function(msg){
+	      * 		 vit = msg;
+	      * 		 console.log('speed: ' + msg);
+	      * 	     });*/
+
+	 });
+
+
+
+	</script>
+    </head>
+    <body>
+    </body>
+</html>
