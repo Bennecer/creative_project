@@ -17,29 +17,38 @@
 
 	<script>
 
-	 var GuiTest = function(){
-	     this.buildingSize = 20;
-	 }
+    var GUIElement = function(){
+       this.buildingSize = 5;
+       this.triggerLoire = 1;
+       this.isLoireTriggered = false;
+    }
 
 
-	 $(document).ready(function(){
+    $(document).ready(function(){
 
-	     var gui_param = new GuiTest();
+      var GUIElement_param = new GUIElement();
 
-	     var gui = new dat.gui.GUI();
-	     var speed_controller = gui.add(gui_param, 'buildingSize', 1, 40);
+      var gui = new dat.gui.GUI();
+      var buildingSize_controller = gui.add(GUIElement_param, 'buildingSize', 1, 40);
+      var triggerLoire_controller = gui.add(GUIElement_param, 'triggerLoire', 0, 1).listen();
+      var isLoireTriggered_controller = gui.add(GUIElement_param, 'isLoireTriggered');
 
-	      speed_controller.onChange(function(value){
-//		  vit = value;
-		  socket.emit('buildingSize', value);
-	      });
-	     /*
-	      * 	     socket.on('speed', function(msg){
-	      * 		 vit = msg;
-	      * 		 console.log('speed: ' + msg);
-	      * 	     });*/
+      buildingSize_controller.onChange(function(value){
+        socket.emit('buildingSize', value);
+      });
 
-	 });
+      var update = function() {
+        requestAnimationFrame(update);
+
+        if(GUIElement_param.isLoireTriggered){
+          GUIElement_param.triggerLoire = Math.random(0, 1);
+          socket.emit('triggerLoire', GUIElement_param.triggerLoire);
+        }
+      };
+
+      update();
+
+    });
 
 
 
