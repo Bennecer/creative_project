@@ -17,32 +17,61 @@
 
 	<script>
 
-	 var GuiTest = function(){
-	     this.speed = 0.8;
-	 }
-	 
-
-	 $(document).ready(function(){
-	     
-	     var gui_param = new GuiTest();
-
-	     var gui = new dat.gui.GUI();
-	     var speed_controller = gui.add(gui_param, 'speed', -5, 5);	     
-
-	      speed_controller.onChange(function(value){
-//		  vit = value;
-		  socket.emit('speed', value);
-	      });
-	     /* 
-	      * 	     socket.on('speed', function(msg){
-	      * 		 vit = msg;
-	      * 		 console.log('speed: ' + msg);
-	      * 	     });*/
-
-	 });
+    var GUIElement = function(){
+       this.buildingSize = 5;
+       this.triggerLoire = 1;
+       this.triggerBuilding = 1;
+       this.isLoireTriggered = false;
+       this.isBuildingTriggered = false;
+      //  this.colorR =87;       
+       this.colorV = 17;
+    }
 
 
-	 
+    $(document).ready(function(){
+
+      var GUIElement_param = new GUIElement();
+
+      var gui = new dat.gui.GUI();
+      var buildingSize_controller = gui.add(GUIElement_param, 'buildingSize', 1, 40);
+      var triggerLoire_controller = gui.add(GUIElement_param, 'triggerLoire', 0, 1).listen();
+      var isLoireTriggered_controller = gui.add(GUIElement_param, 'isLoireTriggered');
+      var triggerBuilding_controller = gui.add(GUIElement_param, 'triggerBuilding', 0, 1).listen();
+      var isBuildingTriggered_controller = gui.add(GUIElement_param, 'isBuildingTriggered');
+      // var colorR_controller = gui.add(GUIElement_param, 'colorR', 57, 200);
+      var colorV_controller = gui.add(GUIElement_param, 'colorV', 17, 250);
+
+      buildingSize_controller.onChange(function(value){
+       socket.emit('buildingSize', value);
+      });
+
+      //  colorR_controller.onChange(function(value){
+      //  socket.emit('colorR', value);
+      // });
+
+       colorV_controller.onChange(function(value){
+       socket.emit('colorV', value);
+      });
+
+      var update = function() {
+        requestAnimationFrame(update);
+
+        if(GUIElement_param.isLoireTriggered){
+          GUIElement_param.triggerLoire = Math.random(0, 1);
+          socket.emit('triggerLoire', GUIElement_param.triggerLoire);
+        }
+        if(GUIElement_param.isBuildingTriggered){
+          GUIElement_param.triggerBuilding = Math.random(0, 1);
+          socket.emit('triggerBuilding', GUIElement_param.triggerBuilding);
+        }
+      };
+
+      update();
+
+    });
+
+
+
 	</script>
     </head>
     <body>

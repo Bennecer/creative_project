@@ -1,3 +1,17 @@
+var GuiTest = function(){
+  this.buildingSize = 20;
+}
+
+
+$(document).ready(function(){
+  socket.on('buildingSize', function(msg){
+    //vit = msg;
+    //console.log('buildingSize: ' + msg);
+    console.log(msg);
+  });
+});
+
+
 var rayonMax = 0;
 var points = 20;
 var tab_rayon = [];
@@ -16,13 +30,14 @@ var citySet1 = false;
 var citySet2 = false;
 var citySet3 = false;
 
-var max_rectangles = 200;
+var max_rectangles = 8000;
 var n_rectangles_plus = 5; // nouvelles rectangles à chaque rafraichissement
 var n_rectangles_per = 5;
 
+var song;
+
 function setup() {
-    song = loadSound('water_sound.wav');
-    song2 = loadSound('splash.wav');
+    song = loadSound('marteau.wav');
     createCanvas(windowWidth, windowHeight);
     rectMode(CENTER);
     largeur = windowWidth;
@@ -112,7 +127,6 @@ function setup() {
                     var distance_collision = (rectangles[i].r + rectangles[j].r) / 2;
                     if (rectangles[i].pos.dist(rectangles[j].pos) < distance_collision){
                         rectangles[i].vit = createVector(0, 0);
-                        song.play();
                     }
                 }
             }
@@ -177,7 +191,7 @@ function Particle(x, y) {
         //                                random(0, hauteur));
         //    }
 
-        if (millis() < 10000){
+        if (millis() < 12000){
             this.pos = createVector(width/2, height/2).add(p5.Vector.random2D().setMag(300));
             this.vit = createVector(width/2, height/2).sub(this.pos).setMag(norme);
 
@@ -211,7 +225,7 @@ function Particle(x, y) {
             // stroke("pink");
         }else{
             // couleur des trucs qui bougent
-            fill(232, 183, 12,0);
+            fill(232, 183, 12, 0);
             noStroke();
         }
 
@@ -292,39 +306,39 @@ function setCity3() {
 }
 
 class Splash{
-                constructor(positionX, positionY){
-                    this.tab_offsetX = [];
-                    this.tab_offsetY = [];
-                    this.plusOrMinus;
-                    this.newSize;
-                    this.rRed;
-                    this.rGreen;
-                    this.positionX = positionX;
-                    this.positionY = positionY;
+  constructor(positionX, positionY){
+      this.tab_offsetX = [];
+      this.tab_offsetY = [];
+      this.plusOrMinus;
+      this.newSize;
+      this.rRed;
+      this.rGreen;
+      this.positionX = positionX;
+      this.positionY = positionY;
 
-                    this.rRed = Math.floor((Math.random() * 216) + 1);
-                    this.rGreen = Math.floor((Math.random() * 228) + 171);
+      this.rRed = Math.floor((Math.random() * 216) + 1);
+      this.rGreen = Math.floor((Math.random() * 228) + 171);
 
-                    for(var i=0; i<numberCircle; i++){
-                        this.plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-                        this.tab_offsetX[i] = (random(circleSize)) * this.plusOrMinus;
-                        this.plusOrMinus = Math.random() < 0.5 ? -1 : 1;
-                        this.tab_offsetY[i] = (random(circleSize)) * this.plusOrMinus;
-                        this.newSize = random(circleSize/4, circleSize/2);
-                    }
-                }
+      for(var i=0; i<numberCircle; i++){
+          this.plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+          this.tab_offsetX[i] = (random(circleSize)) * this.plusOrMinus;
+          this.plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+          this.tab_offsetY[i] = (random(circleSize)) * this.plusOrMinus;
+          this.newSize = random(circleSize/4, circleSize/2);
+      }
+  }
 
-                draw(){
-                    fill(this.rRed, this.rGreen, 255);  // Use color variable 'c' as fill color
-                    noStroke();  // Don't draw a stroke around shapes
+  draw(){
+      fill(this.rRed, this.rGreen, 255);  // Use color variable 'c' as fill color
+      noStroke();  // Don't draw a stroke around shapes
 
-                    ellipse(this.positionX, this.positionY, circleSize, circleSize);
-                    for(var i = 0; i < 15; i++){
-                        if (millis() > 1000+ i*155){
-                            ellipse(this.positionX+this.tab_offsetX[i], this.positionY+this.tab_offsetY[i], this.newSize, this.newSize);
-                        }
-                    }
+      ellipse(this.positionX, this.positionY, circleSize, circleSize);
+      for(var i = 0; i < 15; i++){
+          if (millis() > 1000+ i*155){
+              ellipse(this.positionX+this.tab_offsetX[i], this.positionY+this.tab_offsetY[i], this.newSize, this.newSize);
+          }
+      }
 
-                }
+  }
 
-            }
+}
