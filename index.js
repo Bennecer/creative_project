@@ -31,11 +31,11 @@ io.on('connection', function(socket){
   socket.on('triggerBuilding', function(msg){
     io.emit("triggerBuilding", msg);
   });
-  
+
   socket.on('triggerLoire', function(msg){
     io.emit("triggerLoire", msg);
   });
-  
+
   socket.on('colorR', function(msg){
     io.emit("colorR", msg);
   });
@@ -48,7 +48,15 @@ io.on('connection', function(socket){
     io.emit("apocalypse");
   });
 
- 
+  socket.on('apocalypse2', function(){
+    io.emit("apocalypse2");
+  });
+
+  socket.on('reload', function(){
+    io.emit("reload");
+  });
+
+
 
 });
 
