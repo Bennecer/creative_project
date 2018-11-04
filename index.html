@@ -137,7 +137,7 @@
                     tab_splash[i].positionY += random(-msg, msg);
                     
                     tab_splash[i].newSize += random(-msg, msg);
-
+                    
                 }
             });
             
@@ -148,26 +148,42 @@
                     
                 }
             });
-
+            
             socket.on('buildingSize', function(msg){
                 for(let i=0; i<rectangles.length; i++){
                     rectangles[i].w = msg;
                     rectangles[i].l = msg*4;
                 }
             });
-
-             socket.on('colorR', function(msg){
+            
+            socket.on('colorR', function(msg){
                 for(let i=0; i<rectangles.length; i++){
                     rectangles[i].colorR = msg;
-
+                    
                 }
             });
-
-             socket.on('colorV', function(msg){
+            
+            socket.on('colorV', function(msg){
                 for(let i=0; i<rectangles.length; i++){
                     rectangles[i].colorV = msg;
                 }
             });
+            
+            socket.on('apocalypse', function(){
+                for(let i=0; i<rectangles.length; i++){
+                    rectangles[i].colorR = 255;
+                    rectangles[i].colorV = 0;
+                    rectangles[i].colorB = 0;
+                }
+
+                 for(let j=0; j<tab_splash.length; j++){
+                    tab_splash[j].rRed = Math.floor((Math.random() * 255) + 1);
+                    tab_splash[j].rGreen = 0;
+                    tab_splash[j].rBlue = 0;
+                }                
+            });
+            
+            
         });
         
         
@@ -349,7 +365,7 @@
         // largeur et longueur maximales du trait (pour quand ça commence à grossir)
         this.max_l = random(this.r, this.r*5);
         this.max_w = random(this.r, this.r*2);
-
+        
         this.colorR = 87;
         this.colorV = 17;
         this.colorB = 121;
@@ -453,7 +469,7 @@
                 
             }
             
-            function setCity1() {
+    function setCity1() {
                 
                 var second_rectangle = new Particle();
                 second_rectangle.pos = createVector(largeur/3.6, hauteur/2);
@@ -463,7 +479,7 @@
                 citySet1 = true;
             }
             
-            function setCity2() {
+    function setCity2() {
                 
                 var third_rectangle = new Particle();
                 third_rectangle.pos = createVector(largeur/1.6, hauteur/8);
@@ -473,7 +489,7 @@
                 citySet2 = true;
             }
             
-            function setCity3() {
+    function setCity3() {
                 
                 var fourth_rectangle = new Particle();
                 fourth_rectangle.pos = createVector(largeur/2, hauteur/1.12);
@@ -483,7 +499,7 @@
                 citySet3 = true;
             }
             
-            class Splash{
+    class Splash{
                 constructor(positionX, positionY){
                     this.tab_offsetX = [];
                     this.tab_offsetY = [];
@@ -491,6 +507,7 @@
                     this.newSize;
                     this.rRed;
                     this.rGreen;
+                    this.rBlue = 255;
                     this.positionX = positionX;
                     this.positionY = positionY;
                     
@@ -507,7 +524,7 @@
                 }
                 
                 draw(){
-                    fill(this.rRed, this.rGreen, 255);  // Use color variable 'c' as fill color
+                    fill(this.rRed, this.rGreen, this.rBlue);  // Use color variable 'c' as fill color
                     noStroke();  // Don't draw a stroke around shapes
                     
                     ellipse(this.positionX, this.positionY, circleSize, circleSize);
@@ -525,6 +542,6 @@
                 
             }
             
-        </script>
+    </script>
     </body>
     </html>

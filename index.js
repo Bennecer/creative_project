@@ -25,23 +25,31 @@ app.get('/marteau', function(req, res){
 
 
 io.on('connection', function(socket){
-    socket.on('buildingSize', function(msg){
-	     io.emit("buildingSize", msg);
-    });
-    socket.on('triggerBuilding', function(msg){
-      io.emit("triggerBuilding", msg);
-   });
+  socket.on('buildingSize', function(msg){
+    io.emit("buildingSize", msg);
+  });
+  socket.on('triggerBuilding', function(msg){
+    io.emit("triggerBuilding", msg);
+  });
+  
+  socket.on('triggerLoire', function(msg){
+    io.emit("triggerLoire", msg);
+  });
+  
+  socket.on('colorR', function(msg){
+    io.emit("colorR", msg);
+  });
 
-    socket.on('triggerLoire', function(msg){
-	     io.emit("triggerLoire", msg);
-    });
-
-    socket.on('colorR', function(msg){
-      io.emit("colorR", msg);
-   });
-   socket.on('colorV', function(msg){
+  socket.on('colorV', function(msg){
     io.emit("colorV", msg);
- });
+  });
+
+  socket.on('apocalypse', function(){
+    io.emit("apocalypse");
+  });
+
+ 
+
 });
 
 http.listen(3000, function(){

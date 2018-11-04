@@ -22,9 +22,9 @@
        this.triggerLoire = 1;
        this.triggerBuilding = 1;
        this.isLoireTriggered = false;
-       this.isBuildingTriggered = false;
-      //  this.colorR =87;       
+       this.isBuildingTriggered = false;     
        this.colorV = 17;
+       this.apocalypse = false;
     }
 
 
@@ -34,12 +34,16 @@
 
       var gui = new dat.gui.GUI();
       var buildingSize_controller = gui.add(GUIElement_param, 'buildingSize', 1, 40);
+
       var triggerLoire_controller = gui.add(GUIElement_param, 'triggerLoire', 0, 1).listen();
       var isLoireTriggered_controller = gui.add(GUIElement_param, 'isLoireTriggered');
+
       var triggerBuilding_controller = gui.add(GUIElement_param, 'triggerBuilding', 0, 1).listen();
       var isBuildingTriggered_controller = gui.add(GUIElement_param, 'isBuildingTriggered');
-      // var colorR_controller = gui.add(GUIElement_param, 'colorR', 57, 200);
+
       var colorV_controller = gui.add(GUIElement_param, 'colorV', 17, 250);
+
+      var apocalypse_controller = gui.add(GUIElement_param,'apocalypse');
 
       buildingSize_controller.onChange(function(value){
        socket.emit('buildingSize', value);
@@ -63,6 +67,15 @@
         if(GUIElement_param.isBuildingTriggered){
           GUIElement_param.triggerBuilding = Math.random(0, 1);
           socket.emit('triggerBuilding', GUIElement_param.triggerBuilding);
+        }
+
+         if(GUIElement_param.apocalypse){
+          GUIElement_param.triggerBuilding = Math.random(0, 1);
+          GUIElement_param.triggerLoire = Math.random(0, 1);
+
+          socket.emit('triggerBuilding', GUIElement_param.triggerBuilding);
+          socket.emit('triggerLoire', GUIElement_param.triggerLoire);
+          socket.emit('apocalypse', GUIElement_param.apocalypse);
         }
       };
 
