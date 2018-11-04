@@ -16,11 +16,13 @@ var citySet1 = false;
 var citySet2 = false;
 var citySet3 = false;
 
-var max_rectangles = 8000;
+var max_rectangles = 200;
 var n_rectangles_plus = 5; // nouvelles rectangles à chaque rafraichissement
 var n_rectangles_per = 5;
 
 function setup() {
+    song = loadSound('water_sound.wav');
+    song2 = loadSound('splash.wav');
     createCanvas(windowWidth, windowHeight);
     rectMode(CENTER);
     largeur = windowWidth;
@@ -110,6 +112,7 @@ function setup() {
                     var distance_collision = (rectangles[i].r + rectangles[j].r) / 2;
                     if (rectangles[i].pos.dist(rectangles[j].pos) < distance_collision){
                         rectangles[i].vit = createVector(0, 0);
+                        song.play();
                     }
                 }
             }
@@ -208,7 +211,7 @@ function Particle(x, y) {
             // stroke("pink");
         }else{
             // couleur des trucs qui bougent
-            fill(232, 183, 12);
+            fill(232, 183, 12,0);
             noStroke();
         }
 
