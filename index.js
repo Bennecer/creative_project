@@ -23,6 +23,14 @@ app.get('/marteau', function(req, res){
   res.sendFile(__dirname + '/marteau.wav');
 });
 
+app.get('/eboulement1', function(req, res){
+  res.sendFile(__dirname + '/eboulement1.wav');
+});
+
+app.get('/eboulement2', function(req, res){
+  res.sendFile(__dirname + '/eboulement2.wav');
+});
+
 
 io.on('connection', function(socket){
   socket.on('buildingSize', function(msg){

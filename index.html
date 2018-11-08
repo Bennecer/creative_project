@@ -181,14 +181,22 @@
                     rectangles[i].colorB = 0;
                 }
 
+                 if (!song3.isPlaying()){
+                    song3.play();
+                }
+
             });
 
             socket.on('apocalypse2', function(){
+                song3.stop();
                  for(let j=0; j<tab_splash.length; j++){
                     tab_splash[j].rRed = Math.floor((Math.random() * 255) + 1);
                     tab_splash[j].rGreen = 0;
                     tab_splash[j].rBlue = 0;
                     tab_splash[j].newSize++;
+                }
+                if (!song4.isPlaying()){
+                    song4.play();
                 }
             });
 
@@ -235,6 +243,8 @@
         var bg;
         var song;
         var song2;
+        var song3;
+        var song4;
 
         var isApocalypse = false;
         var setApocalypse = false;
@@ -242,6 +252,8 @@
         function preload() {
             song = loadSound("marteau");
             song2 = loadSound("splashsound");
+            song3 = loadSound("eboulement1");
+            song4 = loadSound("eboulement2");
 
         }
 
