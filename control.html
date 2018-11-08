@@ -26,7 +26,6 @@
        this.colorV = 17;
        this.apocalypse = false;
        this.apocalypse2 = false;
-       this.reload = false;
     }
 
 
@@ -47,8 +46,6 @@
 
       var apocalypse_controller = gui.add(GUIElement_param,'apocalypse');
       var apocalypse2_controller = gui.add(GUIElement_param,'apocalypse2');
-
-      var reload_controller = gui.add(GUIElement_param,'reload');
 
       buildingSize_controller.onChange(function(value){
        socket.emit('buildingSize', value);
