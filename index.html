@@ -16,7 +16,14 @@
     <!--link rel="stylesheet" type="text/css" href="styles.css" /-->
 
     <style>
+        body{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
         canvas{
+            margin: 0 auto;
             background-size: cover;
             background-position: center 71%;
             background-repeat: no-repeat;
@@ -200,19 +207,6 @@
                 }
             });
 
-            socket.on('reload', function(){
-              for(let j=0; j<rectangles.length; j++){
-                  rectangles = [];
-                  rectangles[j] = rectangles_init[j];
-              }
-
-              for(let j=0; j<tab_splash.length; j++){
-                  tab_splash = [];
-                  tab_splash[j] = tab_splash_init[j];
-              }
-            });
-
-
         });
 
         var rectangles_init = [];
@@ -260,13 +254,13 @@
 
         function setup() {
 
-            createCanvas(windowWidth, windowHeight);
+            createCanvas(1000, 700);
             rectMode(CENTER);
-            largeur = windowWidth;
-            hauteur = windowHeight;
+            largeur = 1000;
+            hauteur = 700;
 
             // background(255,255,120);
-            rayonMax = windowHeight - 450;
+            rayonMax = hauteur - 450;
             positionX = -rayonMax+25;
             positionY = 120;
 
@@ -289,7 +283,7 @@
             }
 
             for (var i = 0 ; i < points; i++){
-                var rayon = windowHeight - 450;
+                var rayon = hauteur - 450;
                 if( i % 2 ==0){
                     rayon = random(rayon - 40, rayon );
                 }

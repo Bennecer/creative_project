@@ -59,13 +59,6 @@ io.on('connection', function(socket){
   socket.on('apocalypse2', function(){
     io.emit("apocalypse2");
   });
-
-  socket.on('reload', function(){
-    io.emit("reload");
-  });
-
-
-
 });
 
 http.listen(3000, function(){
